@@ -13,7 +13,6 @@ export default function Home() {
 		const req = await axios.post<CheckResults>("/api/check", {
 			json: rollJson,
 		});
-		console.log(req.data);
 		if (req.data) {
 			setCheckResults({
 				isPublicHashValid: req.data.isPublicHashValid,
@@ -33,6 +32,7 @@ export default function Home() {
 					placeholder="Paste the json here"
 					className="border-white outline-none border bg-zinc-800 p-1"
 					onChange={e => {
+						setCheckResults(null);
 						setRollJson(e.currentTarget.value);
 					}}
 				></textarea>
@@ -43,10 +43,8 @@ export default function Home() {
 			<div className="flex justify-center flex-col items-center m-4">
 				<h2 className="bg-zinc-800 p-2 rounded m-2">Check results</h2>
 				{checkResults ? (
-					<>
-						<p className="">
-							Given public hash: {JSON.parse(rollJson).publicHash}
-						</p>
+					<div className="m-2 flex flex-col items-center">
+						<p>Given public hash: {JSON.parse(rollJson).publicHash}</p>
 						<p>Generated public hash: {checkResults.publicHash}</p>
 						{checkResults.isPublicHashValid ? (
 							<p className="bg-green-800 p-2 rounded">The data is equal!</p>
@@ -55,10 +53,10 @@ export default function Home() {
 								The data is not equal! verify the values and try again
 							</p>
 						)}
-					</>
+					</div>
 				) : null}
 				{checkResults ? (
-					<>
+					<div className="m-2 flex flex-col items-center">
 						<p>Given Roll: {JSON.parse(rollJson).roll}</p>
 						<p>Generated Roll: {checkResults.randomNumber}</p>
 						{checkResults.isRollValid ? (
@@ -68,7 +66,7 @@ export default function Home() {
 								The data is not equal! verify the values and try again
 							</p>
 						)}
-					</>
+					</div>
 				) : null}
 			</div>
 		</main>
