@@ -1,7 +1,6 @@
-import { Requisition } from "@/types/api";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Requisition) {
+export async function POST(req: Request) {
 	const body = await req.json();
 	const { hash, maxRange } = body;
 	const decimalValue = parseInt(hash, 16);
